@@ -1,26 +1,67 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-brand-primary: #102f49;
+  --color-brand-secondary: #f4ead1;
+  --color-brand-accent: #c8953d;
+  --color-brand-dark: #0c1720;
+  --color-brand-light: #fbf7ed;
+  --color-brand-river: #2f6870;
+  --color-brand-moss: #657349;
+  --color-surface: #ffffff;
+  --color-surface-warm: #f2e6d1;
+  --color-border: #ded1ba;
+  --color-text: #132433;
+  --color-muted: #5e6d78;
+  --background: var(--color-brand-light);
+  --foreground: var(--color-text);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-brand-primary: var(--color-brand-primary);
+  --color-brand-secondary: var(--color-brand-secondary);
+  --color-brand-accent: var(--color-brand-accent);
+  --color-brand-dark: var(--color-brand-dark);
+  --color-brand-light: var(--color-brand-light);
+  --color-brand-river: var(--color-brand-river);
+  --color-brand-moss: var(--color-brand-moss);
+  --color-surface: var(--color-surface);
+  --color-surface-warm: var(--color-surface-warm);
+  --color-border: var(--color-border);
+  --color-text: var(--color-text);
+  --color-muted: var(--color-muted);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+body {
+  background:
+    linear-gradient(90deg, rgba(16, 47, 73, 0.045) 1px, transparent 1px),
+    linear-gradient(180deg, #fbf7ed 0%, #f3ead8 42%, #ffffff 100%);
+  background-size: 44px 44px, auto;
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  text-underline-offset: 0.22em;
+}
+
+::selection {
+  background: var(--color-brand-accent);
+  color: var(--color-brand-dark);
 }

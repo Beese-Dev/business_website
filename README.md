@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Chartiers Creek Business Technology Website
 
-## Getting Started
+Next.js website for Chartiers Creek Business Technology, focused on business
+websites, networking, and hardware setup for Pittsburgh small businesses.
 
-First, run the development server:
+## Stack
+
+- Next.js App Router
+- React
+- TypeScript
+- Tailwind CSS 4
+- Local MDX content planned with `next-mdx-remote`
+- Office 365 email flow planned with `nodemailer`
+
+## Local Development
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Docs
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `build_plan/MASTER_PROJECT_PLAN.md`: architecture and execution checklist
+- `build_plan/PRE_BUILD_REQUIREMENTS.md`: business, brand, and launch decisions
+- `build_plan/CHANGELOG.md`: completed work and next-step placeholder
 
-## Learn More
+## Current Status
 
-To learn more about Next.js, take a look at the following resources:
+The project has been scaffolded and the branding foundation is in place. The
+home, services, contact, and thank-you routes exist. The contact form, server
+action email flow, and MDX service pages are still planned work.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Dependency Notes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`package.json` includes an npm override for `postcss@8.5.15` because the current
+Next.js release declares an older transitive PostCSS version that is flagged by
+`npm audit`. Keep the override until Next.js ships a dependency update that no
+longer needs it.
