@@ -48,10 +48,31 @@ placeholder between build sessions.
 - The existing logo is suitable for constrained header/mobile use. A larger
   source asset or SVG is still recommended before final polish.
 
+## 2026-05-30
+
+### Added
+- Added the multi-step consultation form as a dedicated client component.
+- Added a consultation Server Action with server-side validation, honeypot
+  handling, simple submission guarding, Office 365 SMTP delivery, lead
+  notification email, requester auto-reply email, expected-error state returns,
+  and successful redirect to `/thank-you`.
+- Added local `nodemailer` type declarations for the current email usage.
+- Added `build_plan/CODEBASE_ANALYSIS.md` as a current implementation snapshot.
+
+### Changed
+- Updated the contact page to render the reusable consultation form instead of
+  the original static placeholder form.
+- Updated the master project plan to mark the contact form and email flow as
+  implemented and to keep MDX service pages as the next major feature area.
+
+### Verified
+- `npm run lint` passes.
+- `npm run build` passes and prerenders `/`, `/contact`, `/services`, and
+  `/thank-you`.
+- Test live email delivery after Office 365 environment variables are available.
+
 ## Next Steps
 
-- Build the full multi-step consultation form on `/contact`.
-- Add the server action for form validation and Office 365 email delivery.
 - Confirm lead sender and recipient mailboxes before enabling live email.
 - Add MDX service content files and dynamic `/services/[slug]` rendering.
 - Replace placeholder service/contact copy with final launch content.

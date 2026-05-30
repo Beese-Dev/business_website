@@ -10,7 +10,7 @@ websites, networking, and hardware setup for Pittsburgh small businesses.
 - TypeScript
 - Tailwind CSS 4
 - Local MDX content planned with `next-mdx-remote`
-- Office 365 email flow planned with `nodemailer`
+- Office 365 email flow with `nodemailer`
 
 ## Local Development
 
@@ -32,13 +32,20 @@ Open `http://localhost:3000`.
 
 - `build_plan/MASTER_PROJECT_PLAN.md`: architecture and execution checklist
 - `build_plan/PRE_BUILD_REQUIREMENTS.md`: business, brand, and launch decisions
+- `build_plan/CODEBASE_ANALYSIS.md`: current implementation snapshot, risks,
+  and next build order
 - `build_plan/CHANGELOG.md`: completed work and next-step placeholder
 
 ## Current Status
 
 The project has been scaffolded and the branding foundation is in place. The
-home, services, contact, and thank-you routes exist. The contact form, server
-action email flow, and MDX service pages are still planned work.
+home, services, contact, and thank-you routes exist. The contact page now uses a
+multi-step consultation form backed by a Next.js Server Action, Office 365 SMTP
+configuration checks, lead notification email, requester auto-reply email,
+honeypot handling, and inline expected-error states.
+
+Still planned: dynamic MDX service pages, browser QA, live email verification,
+and Vercel deployment configuration.
 
 ## Dependency Notes
 

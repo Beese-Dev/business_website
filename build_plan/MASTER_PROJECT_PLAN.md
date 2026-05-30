@@ -19,6 +19,12 @@
   /services        # Local .mdx files (web-development.mdx, etc.)
 ```
 
+Current implementation note: the launch routes are currently `app/page.tsx`,
+`app/services/page.tsx`, `app/contact/page.tsx`, and `app/thank-you/page.tsx`.
+The multi-step consultation form now lives in `components/ConsultationForm.tsx`
+and posts to `app/actions/consultation.ts`. The dynamic MDX service route and
+`content/services` folder are still planned work.
+
 ## 3. Features and Data Flow
 
 ### 3.1. Multi-Step Consultation Form
@@ -38,6 +44,8 @@
 ### 3.2. Lead Generation / Email Routing
 - **Method:** Next.js Server Action (`'use server'`) triggered by the final form submission.
 - **Integration:** Nodemailer configured with Microsoft Office 365 SMTP.
+- **Auto-reply:** Send a simple confirmation email to the requester after the
+  lead notification email succeeds.
 - **Security:** Use `.env.local` for secrets and deployment environment variables in Vercel. Do not hardcode email credentials or recipients.
 - **Environment Contract:**
   ```env
@@ -154,20 +162,21 @@ Ensure all components use TypeScript with strict typing.
 - [ ] Confirm responsive layout in browser.
 
 ### Phase 3: Contact Form
-- [ ] Build multi-step form UI.
-- [ ] Add client-side validation.
-- [ ] Add accessible labels and errors.
-- [ ] Add honeypot field.
-- [ ] Preserve form state on errors.
+- [x] Build multi-step form UI.
+- [x] Add client-side validation.
+- [x] Add accessible labels and errors.
+- [x] Add honeypot field.
+- [x] Preserve form state on errors.
 
 ### Phase 4: Server Action & Email
-- [ ] Add consultation form server action.
-- [ ] Validate form data server-side.
-- [ ] Configure Nodemailer Office 365 SMTP.
-- [ ] Add env var checks.
-- [ ] Send lead email to `LEAD_NOTIFICATION_TO`.
-- [ ] Handle SMTP failure without redirect.
-- [ ] Redirect successful submissions to `/thank-you`.
+- [x] Add consultation form server action.
+- [x] Validate form data server-side.
+- [x] Configure Nodemailer Office 365 SMTP.
+- [x] Add env var checks.
+- [x] Send lead email to `LEAD_NOTIFICATION_TO`.
+- [x] Send requester auto-reply email after lead notification succeeds.
+- [x] Handle SMTP failure without redirect.
+- [x] Redirect successful submissions to `/thank-you`.
 
 ### Phase 5: MDX Services
 - [ ] Add service content directory.
