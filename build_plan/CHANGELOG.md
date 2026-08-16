@@ -71,6 +71,38 @@ placeholder between build sessions.
   `/thank-you`.
 - Test live email delivery after Office 365 environment variables are available.
 
+## 2026-08-12
+
+### Added
+- Reviewed `CCB_Tech_Website_Redesign_Brief.md` against existing build
+  decisions and logged the resolution in
+  `build_plan/PRE_BUILD_REQUIREMENTS.md` Section 11 (Vercel deployment, no
+  IT-support/help-desk positioning, single `/contact` lead form, and 3-item
+  nav all stay as previously decided).
+- Added a "Who We Help" homepage section identifying the 5-50 employee
+  target audience, anchored from a new hero secondary CTA ("See Who We
+  Help").
+- Added a "Why CCB Tech?" homepage section covering single-vendor
+  consolidation.
+- Added an `app/globals.css`-token-based redesign integration checklist to
+  `build_plan/MASTER_PROJECT_PLAN.md` (Phase 2b).
+
+### Changed
+- Updated the site footer to more prominently surface "Pittsburgh-area
+  support" and to add a "Get in touch" link to `/contact`, since no real
+  business phone number or public email address is confirmed yet.
+
+### Removed
+- Removed the Trust Signals placeholder banner added earlier the same day.
+  No real client or partner logos exist yet, so the section was pulled
+  rather than left rendering placeholder boxes. Marked as deferred in
+  `build_plan/MASTER_PROJECT_PLAN.md` Phase 2b.
+
+### Verified
+- `npm run lint` passes.
+- `npm run build` passes and prerenders `/`, `/contact`, `/services`, and
+  `/thank-you`.
+
 ## Next Steps
 
 - Confirm lead sender and recipient mailboxes before enabling live email.

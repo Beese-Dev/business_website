@@ -161,6 +161,23 @@ Ensure all components use TypeScript with strict typing.
 - [x] Build footer.
 - [ ] Confirm responsive layout in browser.
 
+### Phase 2b: Homepage Redesign Integration
+Source: `CCB_Tech_Website_Redesign_Brief.md`, reconciled against existing
+decisions in `PRE_BUILD_REQUIREMENTS.md` Section 11. Deployment target
+(Vercel), site positioning (no IT-support/help-desk framing), nav structure
+(3 items), and lead-capture surface (single `/contact` page) are unchanged.
+- [x] Add "Who We Help" (Hook) section identifying the 5-50 employee target
+      audience.
+- [x] Rewire hero secondary CTA to anchor to the Hook section ("See Who We
+      Help").
+- [x] Add "Why CCB Tech?" section covering single-vendor consolidation.
+- [ ] Add Trust Signals placeholder banner (client/partner logos). Deferred:
+      no logos available yet; add back once real client/partner logos are
+      provided.
+- [x] Refresh footer copy to more prominently surface Pittsburgh-area
+      support messaging.
+- [x] Verify `npm run lint` and `npm run build` after homepage changes.
+
 ### Phase 3: Contact Form
 - [x] Build multi-step form UI.
 - [x] Add client-side validation.

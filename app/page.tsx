@@ -57,10 +57,10 @@ export default function Home() {
                 Start a Project
               </Link>
               <Link
-                href="/services"
+                href="#who-we-help"
                 className="inline-flex h-12 items-center justify-center border border-brand-primary/30 bg-surface px-6 text-sm font-bold text-brand-primary transition-colors hover:border-brand-river hover:text-brand-river focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2"
               >
-                View Services
+                See Who We Help
               </Link>
             </div>
 
@@ -122,6 +122,23 @@ export default function Home() {
         </div>
       </section>
 
+      <section id="who-we-help" className="scroll-mt-20 border-y border-border bg-surface-warm">
+        <div className="mx-auto max-w-4xl px-4 py-16 text-center sm:px-6 lg:px-8">
+          <p className="text-sm font-bold uppercase text-brand-river">
+            Who we help
+          </p>
+          <h2 className="mt-3 text-3xl font-bold leading-tight text-brand-dark sm:text-4xl">
+            IT support built for growing teams.
+          </h2>
+          <p className="mt-6 text-lg leading-8 text-muted">
+            CCB Tech helps local businesses in the 5-to-50 employee range look
+            professional online, connect their office cleanly, and get
+            everyday equipment installed without turning the project into a
+            maze.
+          </p>
+        </div>
+      </section>
+
       <section className="bg-surface">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 md:grid-cols-[0.85fr_1.15fr] lg:px-8">
           <div>
@@ -151,6 +168,26 @@ export default function Home() {
               </article>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="border-y border-border bg-brand-light">
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:grid-cols-2 md:items-center lg:px-8">
+          <div>
+            <p className="text-sm font-bold uppercase text-brand-river">
+              Why CCB Tech
+            </p>
+            <h2 className="mt-3 text-3xl font-bold leading-tight text-brand-dark sm:text-4xl">
+              One local partner instead of a pile of vendors.
+            </h2>
+          </div>
+          <p className="text-lg leading-8 text-muted">
+            Most small teams end up juggling a web developer, a network
+            installer, and a hardware vendor who have never spoken to each
+            other. CCB Tech handles the physical hardware, the network, and
+            the web presence as one local partner, so nothing falls through
+            the cracks between vendors.
+          </p>
         </div>
       </section>
 

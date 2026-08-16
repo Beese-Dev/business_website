@@ -168,6 +168,50 @@ Call to Action
 - [ ] Confirm domain and DNS access if launching on a real domain.
   - Pending: deal with deployment when ready.
 
+## 11. Redesign Brief Integration (2026-08-12)
+
+`CCB_Tech_Website_Redesign_Brief.md` was reviewed against the decisions above
+and the current implementation. It is a generic client-brief template, not a
+from-scratch spec, so several of its assumptions conflict with decisions
+already made and locked in. Resolutions:
+
+- [x] Deployment target: brief mentions Azure hosting for multiple tenant
+  domains.
+  - Decision: Keep Vercel. The Azure mention is treated as boilerplate from
+    the brief template, not a real requirement. No deployment architecture
+    change.
+- [x] Templating engine: brief mentions EJS-style templating compatibility.
+  - Decision: Not applicable. The project is Next.js/React, already decided
+    in `MASTER_PROJECT_PLAN.md`. No action.
+- [x] Site positioning: brief's services grid includes a "Help Desk &
+  Hardware Support" card and cloud/SaaS administration language.
+  - Decision: Keep the narrow launch scope from Section 3/6 above (website
+    development, networking, hardware setup only). No help desk or IT
+    support framing. Service card copy may be refreshed for tone/clarity to
+    match the brief's writing style, but the three categories and their
+    scope do not change.
+- [x] Homepage lead form: brief wants a short form (Name, Email, Phone,
+  Company Size, message) embedded directly in the homepage footer.
+  - Decision: Keep the single dedicated `/contact` multi-step form as the
+    only lead-capture surface. No homepage-embedded form. This also keeps
+    the earlier decision to exclude a Company Size field intact.
+- [x] Navigation: brief specifies Home, Services, How it Works, Contact (4
+  items).
+  - Decision: Keep the existing 3-item nav (Home, Services, Contact). "How
+    it Works" remains an in-page homepage section, not a nav-level page.
+
+What the brief *does* change, adopted as-is:
+- [x] Add a "Hook" section to the homepage identifying the 5-50 employee
+  target audience, reachable from a hero secondary CTA ("See Who We Help").
+- [x] Add a "Why CCB Tech?" section emphasizing single-vendor consolidation
+  (one local partner instead of multiple disconnected IT vendors).
+- [x] Add a Trust Signals section (placeholder client/partner logo banner).
+- [x] Refresh footer copy to more prominently surface "Pittsburgh-area
+  support" messaging alongside a link to get in touch. No real phone number
+  or public email address is available yet (Section 4 above is still
+  pending), so the footer will not fabricate contact details — it links to
+  `/contact` instead.
+
 ## Priority Decisions Before Build
 
 Resolve these first:
