@@ -55,8 +55,14 @@ export const projects: Project[] = [
     ],
     stack: ["Web app", "Live timers"], // TODO: replace with the real stack
     images: {
-      desktop: null, // e.g. { src: "/work/rixa-aperta/desktop.png", alt: "A live debate in progress on desktop" }
-      phone: null, // e.g. { src: "/work/rixa-aperta/phone.png", alt: "A turn timer on a phone" }
+      desktop: {
+        src: "/work/rixa-aperta/desktop.png",
+        alt: "The Rixa Aperta challenge board on desktop: how a debate works, topic filters and starter propositions",
+      },
+      phone: {
+        src: "/work/rixa-aperta/phone.png",
+        alt: "The Rixa Aperta challenge board on a phone",
+      },
     },
     caseStudy: {
       facts: [
