@@ -49,12 +49,11 @@ export const projects: Project[] = [
     summary:
       "Rixa Aperta is a live debate platform. Two people take timed turns on a motion while an audience follows along, scores are kept, and every debater has a profile. We built it from the first sketch to a product people can sign in to and use.",
     features: [
-      "Passwordless email sign-in",
       "Timed turns with automatic forfeits",
       "Live scoring during a debate",
       "Debater profiles and history",
     ],
-    stack: ["Web app", "Passwordless sign-in", "Live timers"], // TODO: replace with the real stack
+    stack: ["Web app", "Live timers"], // TODO: replace with the real stack
     images: {
       desktop: null, // e.g. { src: "/work/rixa-aperta/desktop.png", alt: "A live debate in progress on desktop" }
       phone: null, // e.g. { src: "/work/rixa-aperta/phone.png", alt: "A turn timer on a phone" }
