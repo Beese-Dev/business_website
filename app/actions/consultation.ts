@@ -2,20 +2,15 @@
 
 import { redirect } from "next/navigation";
 import nodemailer from "nodemailer";
-
-export type ServiceCategory =
-  | "Website Development"
-  | "Office Networking"
-  | "Hardware Setup";
+import { projectTypes, site, type ProjectType } from "@/content/site";
 
 export type ConsultationFormValues = {
   fullName: string;
-  companyName: string;
   email: string;
   phone: string;
-  serviceCategory: ServiceCategory | "";
+  projectType: ProjectType | "";
   details: string;
-  website: string;
+  website: string; // honeypot, must stay empty
 };
 
 export type ConsultationFieldErrors = Partial<
@@ -29,12 +24,7 @@ export type ConsultationActionState = {
   values: ConsultationFormValues;
 };
 
-const allowedServiceCategories: ServiceCategory[] = [
-  "Website Development",
-  "Office Networking",
-  "Hardware Setup",
-];
-
+const allowedProjectTypes = projectTypes.map((type) => type.value);
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const lastSubmissionByKey = new Map<string, number>();
 
@@ -44,17 +34,14 @@ function valueFrom(formData: FormData, key: keyof ConsultationFormValues) {
 }
 
 function readValues(formData: FormData): ConsultationFormValues {
-  const serviceCategory = valueFrom(formData, "serviceCategory");
+  const projectType = valueFrom(formData, "projectType");
 
   return {
     fullName: valueFrom(formData, "fullName"),
-    companyName: valueFrom(formData, "companyName"),
     email: valueFrom(formData, "email"),
     phone: valueFrom(formData, "phone"),
-    serviceCategory: allowedServiceCategories.includes(
-      serviceCategory as ServiceCategory,
-    )
-      ? (serviceCategory as ServiceCategory)
+    projectType: allowedProjectTypes.includes(projectType as ProjectType)
+      ? (projectType as ProjectType)
       : "",
     details: valueFrom(formData, "details"),
     website: valueFrom(formData, "website"),
@@ -65,7 +52,7 @@ function validateValues(values: ConsultationFormValues) {
   const fieldErrors: ConsultationFieldErrors = {};
 
   if (!values.fullName) {
-    fieldErrors.fullName = "Enter your full name.";
+    fieldErrors.fullName = "Enter your name.";
   }
 
   if (!values.email) {
@@ -74,19 +61,14 @@ function validateValues(values: ConsultationFormValues) {
     fieldErrors.email = "Enter a valid email address.";
   }
 
-  if (!values.phone) {
-    fieldErrors.phone = "Enter a phone number.";
-  }
-
-  if (!values.serviceCategory) {
-    fieldErrors.serviceCategory =
-      "Choose the kind of project you need help with.";
+  if (!values.projectType) {
+    fieldErrors.projectType = "Pick the kind of project.";
   }
 
   if (!values.details) {
-    fieldErrors.details = "Describe what you are trying to accomplish.";
+    fieldErrors.details = "Tell us a little about the project.";
   } else if (values.details.length > 1600) {
-    fieldErrors.details = "Keep the project details under 1,600 characters.";
+    fieldErrors.details = "Keep the details under 1,600 characters.";
   }
 
   if (values.website) {
@@ -116,8 +98,7 @@ function getEnvConfig(): EnvConfig {
   if (!office365Email || !office365AppPassword || !leadNotificationTo) {
     return {
       ok: false,
-      error:
-        "Email delivery is not configured yet. Please try again later or contact us directly.",
+      error: `The form is not set up to send yet. Email ${site.email} instead.`,
     };
   }
 
@@ -130,7 +111,7 @@ function getEnvConfig(): EnvConfig {
 }
 
 function isRateLimited(values: ConsultationFormValues) {
-  const key = `${values.email.toLowerCase()}|${values.phone}`;
+  const key = values.email.toLowerCase();
   const now = Date.now();
   const previousSubmission = lastSubmissionByKey.get(key);
 
@@ -152,29 +133,27 @@ function escapeHtml(value: string) {
 }
 
 function buildLeadEmail(values: ConsultationFormValues) {
-  const company = values.companyName || "Not provided";
+  const phone = values.phone || "Not provided";
   const submittedAt = new Date().toISOString();
 
   const text = [
-    "New consultation request",
+    "New project request",
     "",
     `Name: ${values.fullName}`,
-    `Company: ${company}`,
     `Email: ${values.email}`,
-    `Phone: ${values.phone}`,
-    `Service category: ${values.serviceCategory}`,
+    `Phone: ${phone}`,
+    `Project type: ${values.projectType}`,
     `Submitted: ${submittedAt}`,
     "",
-    "Project details:",
+    "Details:",
     values.details,
   ].join("\n");
 
   const rows = [
     ["Name", values.fullName],
-    ["Company", company],
     ["Email", values.email],
-    ["Phone", values.phone],
-    ["Service category", values.serviceCategory],
+    ["Phone", phone],
+    ["Project type", values.projectType],
     ["Submitted", submittedAt],
   ];
 
@@ -188,9 +167,9 @@ function buildLeadEmail(values: ConsultationFormValues) {
     .join("");
 
   const html = `
-    <h1>New consultation request</h1>
+    <h1>New project request</h1>
     <table>${htmlRows}</table>
-    <h2>Project details</h2>
+    <h2>Details</h2>
     <p>${escapeHtml(values.details).replaceAll("\n", "<br>")}</p>
   `;
 
@@ -201,19 +180,23 @@ function buildAutoReplyEmail(values: ConsultationFormValues) {
   const text = [
     `Hi ${values.fullName},`,
     "",
-    "Thanks for contacting Chartiers Creek Business Technology. We received your request and will review the details you sent.",
+    `Thanks for getting in touch with ${site.name}. We have your note and will reply within one business day.`,
     "",
-    "Summary:",
-    `Service category: ${values.serviceCategory}`,
+    "What you sent:",
+    `Project type: ${values.projectType}`,
     "",
     values.details,
+    "",
+    `${site.owner.name}`,
+    `${site.legalName}`,
   ].join("\n");
 
   const html = `
     <p>Hi ${escapeHtml(values.fullName)},</p>
-    <p>Thanks for contacting Chartiers Creek Business Technology. We received your request and will review the details you sent.</p>
-    <p><strong>Service category:</strong> ${escapeHtml(values.serviceCategory)}</p>
+    <p>Thanks for getting in touch with ${escapeHtml(site.name)}. We have your note and will reply within one business day.</p>
+    <p><strong>Project type:</strong> ${escapeHtml(values.projectType)}</p>
     <p>${escapeHtml(values.details).replaceAll("\n", "<br>")}</p>
+    <p>${escapeHtml(site.owner.name)}<br>${escapeHtml(site.legalName)}</p>
   `;
 
   return { text, html };
@@ -242,7 +225,7 @@ export async function submitConsultationRequest(
   if (Object.keys(fieldErrors).length > 0) {
     return errorState(
       values,
-      "Please fix the highlighted fields and send the form again.",
+      "Please fix the highlighted fields and send again.",
       fieldErrors,
     );
   }
@@ -278,7 +261,7 @@ export async function submitConsultationRequest(
       from: envConfig.office365Email,
       to: envConfig.leadNotificationTo,
       replyTo: values.email,
-      subject: `New CCB Tech lead: ${values.serviceCategory}`,
+      subject: `New ${site.name} lead: ${values.projectType}`,
       text: leadEmail.text,
       html: leadEmail.html,
     });
@@ -286,16 +269,20 @@ export async function submitConsultationRequest(
     await transporter.sendMail({
       from: envConfig.office365Email,
       to: values.email,
-      subject: "We received your CCB Tech request",
+      subject: `We got your note (${site.name})`,
       text: autoReplyEmail.text,
       html: autoReplyEmail.html,
     });
   } catch (error) {
     console.error("Consultation email delivery failed", error);
 
-    return errorState(values, "We could not send the form. Please try again.", {
-      form: "We could not send the form. Please try again.",
-    });
+    return errorState(
+      values,
+      `We could not send the form. Please try again or email ${site.email}.`,
+      {
+        form: `We could not send the form. Please try again or email ${site.email}.`,
+      },
+    );
   }
 
   redirect("/thank-you");

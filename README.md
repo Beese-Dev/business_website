@@ -1,7 +1,7 @@
 # Chartiers Creek Business Technology Website
 
-Next.js website for Chartiers Creek Business Technology, focused on business
-websites, networking, and hardware setup for Pittsburgh small businesses.
+Next.js website for Chartiers Creek Business Technology (CCB Tech): websites
+and web apps for small businesses and entrepreneurs, in Pittsburgh and remote.
 
 ## Stack
 
@@ -38,14 +38,27 @@ Open `http://localhost:3000`.
 
 ## Current Status
 
-The project has been scaffolded and the branding foundation is in place. The
-home, services, contact, and thank-you routes exist. The contact page now uses a
-multi-step consultation form backed by a Next.js Server Action, Office 365 SMTP
-configuration checks, lead notification email, requester auto-reply email,
-honeypot handling, and inline expected-error states.
+The site follows the CCB Tech design system (tokens, type and voice) and the
+redesign brief: websites and web apps for small businesses and entrepreneurs.
+Networks and hardware are no longer advertised.
 
-Still planned: dynamic MDX service pages, browser QA, live email verification,
-and Vercel deployment configuration.
+Routes: `/` (hero, what we build, recent projects, packages, how we work,
+about, contact), `/work`, `/work/[slug]` case studies, `/services`, `/contact`
+and `/thank-you`, plus generated `sitemap.xml` and `robots.txt`.
+
+All copy and facts live in two files, not in the pages:
+
+- `content/site.ts`: contact details, services, packages (prices), process
+  steps, owner, client quote. Fields set to `null` are left out of the page.
+- `content/work.ts`: the portfolio. One project is `featured`. Screenshots go
+  in `public/work/<slug>/` and are referenced from each project's `images`.
+
+Before launch, fill in: the public email and phone, starting prices for the
+Starter and Business packages, the Rixa Aperta live link and real stack,
+screenshots for each project, a photo of the developer, and a client quote.
+
+Still planned: browser QA on real phones, live email verification, and Vercel
+deployment configuration.
 
 ## Dependency Notes
 

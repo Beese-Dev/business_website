@@ -1,118 +1,90 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Icon } from "@/components/Icon";
+import {
+  ButtonLink,
+  CheckList,
+  Container,
+  Eyebrow,
+  Section,
+  TagList,
+} from "@/components/ui";
+import { services, site } from "@/content/site";
 
 export const metadata: Metadata = {
-  title: "Services",
-  description:
-    "Websites, small office and home office networks, and hardware installation for Pittsburgh-area businesses.",
+  title: "Services: business websites, launch sites and MVPs, redesigns",
+  description: `Web design in ${site.city} and web apps for startups. Business websites, launch sites and MVPs for founders, and redesigns with care and hosting.`,
+  alternates: { canonical: "/services" },
 };
-
-const services = [
-  {
-    title: "Websites for Small Businesses",
-    summary:
-      "A website should make it easy for people to understand what you do and get in touch. We build straightforward sites that look professional, load quickly, and are easy to keep current.",
-    details: [
-      "Clear page structure",
-      "Mobile-friendly build",
-      "Basic local search setup",
-    ],
-  },
-  {
-    title: "Small Office and Home Office Networks",
-    summary:
-      "Whether you work from a small office, a home office, or a mixed setup, the network needs to be steady. We help set up routers, Wi-Fi, switches, printers, and wired devices so the space works the way it should.",
-    details: [
-      "Router and Wi-Fi setup",
-      "Switches and wired connections",
-      "Printer and device connections",
-    ],
-  },
-  {
-    title: "Hardware Installation",
-    summary:
-      "New equipment is only useful when it is installed cleanly and tested. We handle common hardware installs for workstations, monitors, printers, network gear, and office devices.",
-    details: [
-      "Computers and monitors",
-      "Printers and peripherals",
-      "Network equipment installs",
-    ],
-  },
-];
 
 export default function ServicesPage() {
   return (
     <div>
-      <section className="border-b border-border bg-brand-primary text-brand-light">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-          <p className="text-sm font-bold uppercase text-brand-accent">
-            Services
-          </p>
-          <h1 className="mt-4 max-w-4xl text-4xl font-bold leading-tight sm:text-5xl">
-            Websites, office networks, and hardware installs without the
-            runaround.
-          </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-brand-secondary/90">
-            Some projects are simple. Some are tangled. Either way, we start
-            with what you are trying to get done and keep the work practical.
-          </p>
-        </div>
-      </section>
-
-      <section className="bg-brand-light">
-        <div className="mx-auto grid max-w-7xl gap-5 px-4 py-16 sm:px-6 lg:px-8">
-          {services.map((service, index) => (
-            <article
-              key={service.title}
-              className="grid gap-6 border border-border bg-surface p-6 shadow-sm md:grid-cols-[0.32fr_0.68fr] md:p-8"
-            >
-              <div>
-                <p className="text-sm font-bold text-brand-accent">
-                  0{index + 1}
-                </p>
-                <h2 className="mt-3 text-2xl font-bold text-brand-primary">
-                  {service.title}
-                </h2>
-              </div>
-              <div>
-                <p className="text-base leading-8 text-muted">
-                  {service.summary}
-                </p>
-                <ul className="mt-6 grid gap-3 sm:grid-cols-3">
-                  {service.details.map((detail) => (
-                    <li
-                      key={detail}
-                      className="border-l-2 border-brand-accent bg-brand-light px-4 py-3 text-sm font-semibold text-brand-dark"
-                    >
-                      {detail}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="border-t border-border bg-surface">
-        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-12 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
-          <div>
-            <p className="text-sm font-bold uppercase text-brand-river">
-              Not sure where to start?
+      <Section className="border-b border-line">
+        <Container>
+          <div className="max-w-[680px]">
+            <Eyebrow>Services</Eyebrow>
+            <h1 className="t-hero mt-4">
+              Three offers. One developer on each.
+            </h1>
+            <p className="t-lead mt-6 text-ink-muted">
+              A business website, the first version of a product, or a rebuild
+              of what you already have. Each is scoped in one conversation and
+              quoted in writing.
             </p>
-            <h2 className="mt-3 max-w-2xl text-3xl font-bold text-brand-dark">
-              A quick conversation is usually enough to figure out what should
-              happen first.
-            </h2>
           </div>
-          <Link
-            href="/contact"
-            className="inline-flex h-12 shrink-0 items-center justify-center bg-brand-primary px-6 text-sm font-bold text-brand-light transition-colors hover:bg-brand-dark focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2"
-          >
-            Talk Through a Project
-          </Link>
-        </div>
-      </section>
+        </Container>
+      </Section>
+
+      {services.map((service, index) => (
+        <Section
+          key={service.slug}
+          id={service.slug}
+          className={index > 0 ? "border-t border-line" : ""}
+        >
+          <Container className="grid gap-10 md:grid-cols-[1fr_1fr]">
+            <div className="max-w-[560px]">
+              <span className="inline-flex h-10 w-10 items-center justify-center rounded-sm bg-surface-tint text-brand">
+                <Icon name={service.icon} />
+              </span>
+              <h2 className="t-h2 mt-5">{service.title}</h2>
+              <p className="t-lead mt-4 text-ink-muted">{service.summary}</p>
+              <p className="t-body mt-5 text-ink-muted">{service.body}</p>
+              <p className="t-body mt-5">
+                <span className="font-semibold">Good for:</span>{" "}
+                <span className="text-ink-muted">{service.goodFor}</span>
+              </p>
+              <div className="mt-6">
+                <TagList items={service.stack} />
+              </div>
+            </div>
+            <div className="rounded-md border border-line bg-surface-raised p-6 md:p-8">
+              <h3 className="t-h3">What you get</h3>
+              <CheckList items={service.includes} className="mt-4 gap-3" />
+              <div className="mt-8 flex flex-wrap gap-3">
+                <ButtonLink href="/contact">Start a project</ButtonLink>
+                <ButtonLink href="/#packages" variant="secondary">
+                  See packages
+                </ButtonLink>
+              </div>
+            </div>
+          </Container>
+        </Section>
+      ))}
+
+      <Section tint>
+        <Container className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div className="max-w-[560px]">
+            <h2 className="t-h2">Not sure which one you need?</h2>
+            <p className="t-lead mt-3 text-ink-muted">
+              Describe the project in a few sentences and we will tell you
+              which fits, and roughly what it costs.
+            </p>
+          </div>
+          <ButtonLink href="/contact" variant="accent">
+            Start a project
+          </ButtonLink>
+        </Container>
+      </Section>
     </div>
   );
 }

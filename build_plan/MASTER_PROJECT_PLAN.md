@@ -1,5 +1,12 @@
 # IT Services Website - Master Project Plan & Source of Truth
 
+## 2026-08-12: Design Brief Review
+- **Decision:** Proceed with updates based on the new design brief (`CCB_Tech_Website_Redesign_Brief (1).md`).
+- **Navigation:** The navigation structure will be updated to `Home, Services, How it Works, Contact`. A new "How it Works" page will be created.
+- **Service Scope:** The site's focus will be expanded to include "Managed IT services" and "Help Desk & Hardware Support" as core offerings, updating homepage and service content accordingly.
+- **Contact Form:** The contact form fields will be updated to `Name, Email, Phone, Company Size, "Tell us what needs built, connected, or installed"`. The multi-step form will be simplified to a single step.
+- **Technical Stack:** The project will continue to use the established Next.js/Vercel stack, ignoring the brief's mentions of EJS and Azure.
+
 ## 1. Core Architectural Constraints
 - **Framework**: Next.js (App Router, React Server Components)
 - **Styling**: Raw Tailwind CSS. **Constraint:** No third-party UI component libraries (e.g., shadcn/ui, Radix). All components must be built from scratch using HTML primitives and Tailwind utility classes.
@@ -29,12 +36,11 @@ and posts to `app/actions/consultation.ts`. The dynamic MDX service route and
 
 ### 3.1. Multi-Step Consultation Form
 - **Location:** `/contact`
-- **Architecture:** A single React Client Component. Progress is tracked using a simple `useState` hook.
+- **Architecture:** A single React Client Component that uses a server action.
 - **Fields Collected:**
-  - **Step 1 (Contact):** Full Name, Company Name, Email, Phone
-  - **Step 2 (Service Category):** Radio buttons for Website Development, Office Networking, Hardware Setup
-  - **Step 3 (Details):** Textarea for "Briefly describe your current setup and what you are looking to achieve"
-- **UX:** Smooth transitions between steps without page reloads. Simple Tailwind fade-ins where appropriate.
+  - Name, Email, Phone
+  - Company Size
+  - "Tell us what needs built, connected, or installed" (Textarea)
 - **Client Validation:** Managed manually via standard React state checks before allowing progression to the next step.
 - **Server Validation:** The server action must re-validate required fields, email format, maximum message length, and allowed service category before sending email. Client-side validation must never be treated as the only source of truth.
 - **Spam Protection:** Include a hidden honeypot field and a simple server-side submission guard. Avoid adding CAPTCHA or third-party anti-spam tooling unless spam becomes a confirmed issue.

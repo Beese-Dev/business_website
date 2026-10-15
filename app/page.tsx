@@ -1,205 +1,259 @@
 import Image from "next/image";
 import Link from "next/link";
-
-const services = [
-  {
-    title: "Business Websites",
-    kicker: "Web",
-    body: "Lean, credible sites that explain the business, work on mobile, and make the next step obvious.",
-  },
-  {
-    title: "SOHO Networks",
-    kicker: "Network",
-    body: "Wi-Fi, routing, switches, printers, and wired devices configured for small offices and home offices.",
-  },
-  {
-    title: "Hardware Installation",
-    kicker: "Install",
-    body: "Workstations, monitors, printers, access points, and office hardware installed cleanly and tested on-site.",
-  },
-];
-
-const proofPoints = [
-  "Pittsburgh-area support",
-  "Plain-English recommendations",
-  "Clean, practical installs",
-];
-
-const process = [
-  "Listen to the goal and inspect what is already in place.",
-  "Recommend the simplest reliable path before you spend money.",
-  "Build, connect, test, and explain the finished setup clearly.",
-];
+import { ConsultationForm } from "@/components/ConsultationForm";
+import { ContactDetails } from "@/components/ContactDetails";
+import { Icon } from "@/components/Icon";
+import { FeaturedProject, ProjectCard } from "@/components/ProjectCard";
+import { ScreenshotPair } from "@/components/ProjectFrame";
+import {
+  ButtonLink,
+  Card,
+  CheckList,
+  Container,
+  Eyebrow,
+  Pill,
+  Section,
+  SectionHeading,
+} from "@/components/ui";
+import {
+  everySiteIncludes,
+  packages,
+  process,
+  services,
+  site,
+} from "@/content/site";
+import { getFeaturedProject, projects } from "@/content/work";
 
 export default function Home() {
+  const featured = getFeaturedProject();
+  const otherProjects = projects.filter((p) => p.slug !== featured.slug);
+
   return (
     <div>
-      <section className="border-b border-border bg-brand-light">
-        <div className="mx-auto grid min-h-[calc(100svh-4.5rem)] max-w-7xl gap-10 px-4 py-10 sm:px-6 md:grid-cols-[1.02fr_0.98fr] md:items-start md:py-14 lg:px-8">
-          <div className="max-w-3xl">
-            <p className="text-sm font-bold uppercase text-brand-river">
-              Websites, networks, and hardware installation
-            </p>
-            <h1 className="mt-4 max-w-3xl text-4xl font-bold leading-[1.05] text-brand-dark sm:text-5xl lg:text-6xl">
-              Business technology support for small teams that need things to
-              work.
+      {/* 1. Hero */}
+      <section className="border-b border-line">
+        <Container className="grid gap-12 py-16 md:grid-cols-[1.05fr_0.95fr] md:items-center md:py-24">
+          <div className="max-w-[680px]">
+            <Eyebrow>
+              Web design and web apps · {site.city}, {site.region}
+            </Eyebrow>
+            <h1 className="t-hero mt-4 text-ink">
+              Websites and web apps that get you{" "}
+              <span className="text-brand">launched.</span>
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-muted">
-              CCB Tech helps local businesses look professional online, connect
-              their office cleanly, and get everyday equipment installed without
-              turning the project into a maze.
+            <p className="t-lead mt-6 max-w-[560px] text-ink-muted">
+              For small businesses and entrepreneurs. From a polished business
+              site to the first working version of your product, designed,
+              built and looked after by one developer.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link
-                href="/contact"
-                className="inline-flex h-12 items-center justify-center bg-brand-primary px-6 text-sm font-bold text-brand-light shadow-[0_18px_36px_rgba(12,23,32,0.18)] transition-colors hover:bg-brand-dark focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2"
-              >
-                Start a Project
-              </Link>
-              <Link
-                href="/services"
-                className="inline-flex h-12 items-center justify-center border border-brand-primary/30 bg-surface px-6 text-sm font-bold text-brand-primary transition-colors hover:border-brand-river hover:text-brand-river focus:outline-none focus:ring-2 focus:ring-brand-accent focus:ring-offset-2"
-              >
-                View Services
-              </Link>
+              <ButtonLink href="#contact" variant="accent">
+                Start a project
+              </ButtonLink>
+              <ButtonLink href="#work" variant="secondary" icon="arrow-right">
+                See our work
+              </ButtonLink>
             </div>
+            <p className="t-small mt-8 text-ink-muted">
+              {site.area} · {site.remote} · {site.responseTime}
+            </p>
+          </div>
+          <div className="md:pl-4">
+            <ScreenshotPair project={featured} priority />
+          </div>
+        </Container>
+      </section>
 
-            <div className="mt-10 grid gap-3 text-sm font-medium text-brand-dark sm:grid-cols-3">
-              {proofPoints.map((point) => (
-                <div key={point} className="border-l-2 border-brand-accent pl-3">
-                  {point}
-                </div>
+      {/* 2. What we build */}
+      <Section id="what-we-build">
+        <Container>
+          <SectionHeading
+            eyebrow="What we build"
+            title="Three ways we help"
+            lead="Pick the one that sounds like you. If none does, say so on the form and we will point you the right way."
+          />
+          <div className="grid gap-6 md:grid-cols-3">
+            {services.map((service) => (
+              <Card key={service.slug} lift className="flex flex-col">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-sm bg-surface-tint text-brand">
+                  <Icon name={service.icon} />
+                </span>
+                <h3 className="t-h3 mt-5">{service.title}</h3>
+                <p className="t-body mt-3 text-ink-muted">{service.summary}</p>
+                <p className="t-small mt-4 text-ink-muted">
+                  <span className="font-semibold text-ink">Good for:</span>{" "}
+                  {service.goodFor}
+                </p>
+                <Link
+                  href={`/services#${service.slug}`}
+                  className="mt-auto inline-flex items-center gap-1 pt-6 font-semibold text-brand no-underline hover:underline"
+                >
+                  More about {service.title.toLowerCase()}
+                  <Icon name="arrow-right" size={18} />
+                </Link>
+              </Card>
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      {/* 3. Recent projects */}
+      <Section id="work" className="border-t border-line">
+        <Container>
+          <SectionHeading
+            eyebrow="Recent projects"
+            title="Work you can click on"
+            lead="Real projects, with links. Every claim on this page sits next to one of these."
+          />
+        </Container>
+        <Container>
+          <FeaturedProject project={featured} />
+          {otherProjects.length > 0 ? (
+            <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {otherProjects.map((project) => (
+                <ProjectCard key={project.slug} project={project} />
               ))}
             </div>
+          ) : null}
+          <div className="mt-10">
+            <ButtonLink href="/work" variant="secondary" icon="arrow-right">
+              See all work
+            </ButtonLink>
           </div>
+        </Container>
+      </Section>
 
-          <div className="relative">
-            <div className="absolute inset-x-6 -top-4 h-8 bg-brand-accent/80" />
-            <div className="relative border border-brand-primary/20 bg-surface shadow-[0_24px_70px_rgba(16,47,73,0.18)]">
-              <div className="grid gap-0 md:grid-cols-[0.78fr_1fr]">
-                <div className="grid place-items-center bg-brand-primary px-8 py-10 text-brand-light">
-                  <Image
-                    src="/ccb-logo.png"
-                    alt="Chartiers Creek Business Technology logo"
-                    width={150}
-                    height={129}
-                    priority
-                    className="h-32 w-36 object-contain"
-                  />
-                </div>
-                <div className="p-6 sm:p-8">
-                  <p className="text-xs font-bold uppercase text-brand-river">
-                    Practical support desk
-                  </p>
-                  <h2 className="mt-3 text-2xl font-bold leading-tight text-brand-dark">
-                    One local partner for the small technology jobs that keep
-                    stacking up.
-                  </h2>
-                  <div className="mt-8 grid gap-4">
-                    {services.map((service) => (
-                      <div
-                        key={service.title}
-                        className="grid grid-cols-[4.5rem_1fr] gap-4 border-t border-border pt-4"
-                      >
-                        <p className="text-xs font-bold uppercase text-brand-accent">
-                          {service.kicker}
-                        </p>
-                        <div>
-                          <h3 className="font-bold text-brand-primary">
-                            {service.title}
-                          </h3>
-                          <p className="mt-1 text-sm leading-6 text-muted">
-                            {service.body}
-                          </p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-surface">
-        <div className="mx-auto grid max-w-7xl gap-8 px-4 py-16 sm:px-6 md:grid-cols-[0.85fr_1.15fr] lg:px-8">
-          <div>
-            <p className="text-sm font-bold uppercase text-brand-river">
-              Services
-            </p>
-            <h2 className="mt-3 text-3xl font-bold leading-tight text-brand-dark sm:text-4xl">
-              Clear help for the work between big IT contracts and doing it
-              yourself.
-            </h2>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-3">
-            {services.map((service) => (
-              <article
-                key={service.title}
-                className="border border-border bg-brand-light p-5"
+      {/* 4. Packages */}
+      <Section id="packages" tint>
+        <Container>
+          <SectionHeading
+            eyebrow="Packages"
+            title="Pick a starting point"
+            lead="Every project gets a written quote after one conversation. These are the shapes most projects fit."
+          />
+          <div className="grid gap-6 md:grid-cols-3">
+            {packages.map((pkg) => (
+              <Card
+                key={pkg.name}
+                className={`flex flex-col ${
+                  pkg.popular ? "border-brand" : ""
+                }`}
               >
-                <p className="text-xs font-bold uppercase text-brand-accent">
-                  {service.kicker}
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="t-h3">{pkg.name}</h3>
+                  {pkg.popular ? <Pill>Most popular</Pill> : null}
+                </div>
+                <p className="mt-3 font-display text-2xl font-bold text-ink">
+                  {pkg.priceFrom ? (
+                    <>
+                      <span className="t-small font-sans font-normal text-ink-muted">
+                        from{" "}
+                      </span>
+                      {pkg.priceFrom}
+                    </>
+                  ) : (
+                    "Quoted"
+                  )}
                 </p>
-                <h3 className="mt-3 text-xl font-bold text-brand-primary">
-                  {service.title}
-                </h3>
-                <p className="mt-4 text-sm leading-6 text-muted">
-                  {service.body}
-                </p>
-              </article>
+                <p className="t-body mt-3 text-ink-muted">{pkg.summary}</p>
+                <CheckList items={pkg.includes} className="mt-5" />
+                <ButtonLink
+                  href={`/contact?project=${encodeURIComponent(
+                    pkg.serviceCategory,
+                  )}`}
+                  variant={pkg.popular ? "primary" : "secondary"}
+                  className="mt-8"
+                >
+                  Start with {pkg.name}
+                </ButtonLink>
+              </Card>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="border-y border-border bg-brand-primary text-brand-light">
-        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 md:grid-cols-[0.9fr_1.1fr] md:items-start lg:px-8">
-          <div>
-            <p className="text-sm font-bold uppercase text-brand-accent">
-              How it works
-            </p>
-            <h2 className="mt-3 text-3xl font-bold leading-tight">
-              Less theater. More working equipment and a website you can point
-              people to.
-            </h2>
+          <div className="mt-12 rounded-md border border-line bg-surface-raised p-6 md:p-8">
+            <h3 className="t-h3">Every site includes</h3>
+            <CheckList
+              items={everySiteIncludes}
+              className="mt-4 sm:grid-cols-2 lg:grid-cols-3"
+            />
           </div>
-          <div className="grid gap-5">
-            {process.map((item, index) => (
-              <div
-                key={item}
-                className="grid grid-cols-[3rem_1fr] gap-5 border-t border-brand-secondary/25 pt-5"
+        </Container>
+      </Section>
+
+      {/* 5. How we work */}
+      <Section id="how-we-work">
+        <Container>
+          <SectionHeading
+            eyebrow="How we work"
+            title="Less theater. More working software."
+          />
+          <ol className="grid gap-6 md:grid-cols-3">
+            {process.map((step, index) => (
+              <li
+                key={step.title}
+                className="border-t-2 border-brand pt-5"
               >
-                <span className="text-sm font-bold text-brand-accent">
-                  0{index + 1}
-                </span>
-                <p className="text-lg leading-8 text-brand-secondary">{item}</p>
-              </div>
+                <p className="t-label text-ink-muted">Step {index + 1}</p>
+                <h3 className="t-h3 mt-2">{step.title}</h3>
+                <p className="t-body mt-3 text-ink-muted">{step.body}</p>
+              </li>
             ))}
-          </div>
-        </div>
-      </section>
+          </ol>
+        </Container>
+      </Section>
 
-      <section className="bg-brand-light">
-        <div className="mx-auto flex max-w-7xl flex-col gap-6 px-4 py-12 sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
-          <div>
-            <p className="text-sm font-bold uppercase text-brand-river">
-              Ready to talk
-            </p>
-            <h2 className="mt-3 max-w-3xl text-3xl font-bold leading-tight text-brand-dark">
-              Tell us what needs built, connected, or installed. We will help
-              make the next step clear.
+      {/* 6. About / proof */}
+      <Section id="about" className="border-t border-line">
+        <Container className="grid gap-10 md:grid-cols-[auto_1fr] md:items-start">
+          {site.owner.photo ? (
+            <Image
+              src={site.owner.photo}
+              alt={`${site.owner.name}, the developer behind ${site.name}`}
+              width={240}
+              height={240}
+              className="h-40 w-40 rounded-md object-cover md:h-60 md:w-60"
+            />
+          ) : null}
+          <div className="max-w-[680px]">
+            <Eyebrow>Who you are talking to</Eyebrow>
+            <h2 className="t-h2 mt-3">
+              One developer. Local, reachable, and on the whole project.
             </h2>
+            <p className="t-lead mt-4 text-ink-muted">
+              {site.name} is {site.owner.name}, a developer in {site.city}.
+              You talk to the person who designs, builds and hosts your site,
+              and that person answers the phone afterwards.
+            </p>
+            {site.clientQuote ? (
+              <blockquote className="mt-8 border-l-2 border-brand pl-5">
+                <p className="t-lead text-ink">“{site.clientQuote.quote}”</p>
+                <footer className="t-small mt-3 text-ink-muted">
+                  {site.clientQuote.name}, {site.clientQuote.role}
+                </footer>
+              </blockquote>
+            ) : null}
+            <p className="t-body mt-8 flex items-center gap-2 text-ink-muted">
+              <Icon name="map-pin" className="text-brand" />
+              {site.area}, on site when it helps. {site.remote}.
+            </p>
           </div>
-          <Link
-            href="/contact"
-            className="inline-flex h-12 shrink-0 items-center justify-center bg-brand-accent px-6 text-sm font-bold text-brand-dark transition-colors hover:bg-brand-primary hover:text-brand-light focus:outline-none focus:ring-2 focus:ring-brand-primary focus:ring-offset-2"
-          >
-            Contact CCB Tech
-          </Link>
-        </div>
-      </section>
+        </Container>
+      </Section>
+
+      {/* 7. Contact */}
+      <Section id="contact" className="border-t border-line">
+        <Container className="grid gap-12 md:grid-cols-[0.9fr_1.1fr]">
+          <div className="max-w-[520px]">
+            <Eyebrow>Contact</Eyebrow>
+            <h2 className="t-h2 mt-3">Tell us about the project</h2>
+            <p className="t-lead mt-4 text-ink-muted">
+              A few sentences is enough. You will get a reply from{" "}
+              {site.owner.name}, not a sales team.
+            </p>
+            <ContactDetails className="mt-8" />
+          </div>
+          <ConsultationForm />
+        </Container>
+      </Section>
     </div>
   );
 }
