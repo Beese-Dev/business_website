@@ -68,7 +68,6 @@ export const projects: Project[] = [
       challenge:
         "A debate only works if the timing is fair and nobody can stall. Turns have to run on a shared clock, a missed turn has to count against you automatically, and all of it has to feel live on an ordinary phone. The product also had to be simple enough that a first-time visitor could join a debate in under a minute.",
       built: [
-        "Passwordless sign-in: enter an email, click the link, you are in. No passwords to forget or leak.",
         "Debate rooms with timed turns. When a turn runs out the clock moves on; skip too many and the debate is forfeited automatically.",
         "Scoring that updates as the debate runs, so the audience sees who is ahead.",
         "Profiles with each debater's record, so wins mean something.",
@@ -76,7 +75,6 @@ export const projects: Project[] = [
       underTheHood: [
         "Server-driven timers, so a slow phone or a closed tab cannot stretch a turn.",
         "Live updates pushed to everyone in the room, not polled.",
-        "Email magic links for sign-in, with short expiry and single use.",
         "Deployed on a real domain with hosting the founder owns.",
       ],
       result:
