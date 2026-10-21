@@ -102,7 +102,7 @@ export default function Home() {
         <Container>
           <SectionHeading
             eyebrow="Recent projects"
-            title="Work you can click on"
+            title="Our Work"
             lead="Real projects, with links. Every claim on this page sits next to one of these."
           />
         </Container>

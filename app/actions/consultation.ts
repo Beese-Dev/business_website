@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import nodemailer from "nodemailer";
+import { sendGraphMail, type GraphMailConfig } from "@/lib/graph-mail";
 import { projectTypes, site, type ProjectType } from "@/content/site";
 
 export type ConsultationFormValues = {
@@ -79,23 +79,24 @@ function validateValues(values: ConsultationFormValues) {
 }
 
 type EnvConfig =
-  | {
-      ok: true;
-      office365Email: string;
-      office365AppPassword: string;
-      leadNotificationTo: string;
-    }
-  | {
-      ok: false;
-      error: string;
-    };
+  | { ok: true; mail: GraphMailConfig; leadNotificationTo: string }
+  | { ok: false; error: string };
 
 function getEnvConfig(): EnvConfig {
-  const office365Email = process.env.OFFICE365_EMAIL?.trim();
-  const office365AppPassword = process.env.OFFICE365_APP_PASSWORD?.trim();
+  const tenantId = process.env.AZURE_TENANT_ID?.trim();
+  const clientId = process.env.AZURE_CLIENT_ID?.trim();
+  const clientSecret = process.env.AZURE_CLIENT_SECRET?.trim();
+  const senderMailbox = process.env.MAIL_SENDER?.trim();
+  const fromAddress = process.env.MAIL_FROM?.trim() || undefined;
   const leadNotificationTo = process.env.LEAD_NOTIFICATION_TO?.trim();
 
-  if (!office365Email || !office365AppPassword || !leadNotificationTo) {
+  if (
+    !tenantId ||
+    !clientId ||
+    !clientSecret ||
+    !senderMailbox ||
+    !leadNotificationTo
+  ) {
     return {
       ok: false,
       error: `The form is not set up to send yet. Email ${site.email} instead.`,
@@ -104,8 +105,7 @@ function getEnvConfig(): EnvConfig {
 
   return {
     ok: true,
-    office365Email,
-    office365AppPassword,
+    mail: { tenantId, clientId, clientSecret, senderMailbox, fromAddress },
     leadNotificationTo,
   };
 }
@@ -136,19 +136,6 @@ function buildLeadEmail(values: ConsultationFormValues) {
   const phone = values.phone || "Not provided";
   const submittedAt = new Date().toISOString();
 
-  const text = [
-    "New project request",
-    "",
-    `Name: ${values.fullName}`,
-    `Email: ${values.email}`,
-    `Phone: ${phone}`,
-    `Project type: ${values.projectType}`,
-    `Submitted: ${submittedAt}`,
-    "",
-    "Details:",
-    values.details,
-  ].join("\n");
-
   const rows = [
     ["Name", values.fullName],
     ["Email", values.email],
@@ -166,40 +153,22 @@ function buildLeadEmail(values: ConsultationFormValues) {
     )
     .join("");
 
-  const html = `
+  return `
     <h1>New project request</h1>
     <table>${htmlRows}</table>
     <h2>Details</h2>
     <p>${escapeHtml(values.details).replaceAll("\n", "<br>")}</p>
   `;
-
-  return { text, html };
 }
 
 function buildAutoReplyEmail(values: ConsultationFormValues) {
-  const text = [
-    `Hi ${values.fullName},`,
-    "",
-    `Thanks for getting in touch with ${site.name}. We have your note and will reply within one business day.`,
-    "",
-    "What you sent:",
-    `Project type: ${values.projectType}`,
-    "",
-    values.details,
-    "",
-    `${site.owner.name}`,
-    `${site.legalName}`,
-  ].join("\n");
-
-  const html = `
+  return `
     <p>Hi ${escapeHtml(values.fullName)},</p>
     <p>Thanks for getting in touch with ${escapeHtml(site.name)}. We have your note and will reply within one business day.</p>
     <p><strong>Project type:</strong> ${escapeHtml(values.projectType)}</p>
     <p>${escapeHtml(values.details).replaceAll("\n", "<br>")}</p>
     <p>${escapeHtml(site.owner.name)}<br>${escapeHtml(site.legalName)}</p>
   `;
-
-  return { text, html };
 }
 
 function errorState(
@@ -242,36 +211,18 @@ export async function submitConsultationRequest(
     return errorState(values, envConfig.error, { form: envConfig.error });
   }
 
-  const transporter = nodemailer.createTransport({
-    host: "smtp.office365.com",
-    port: 587,
-    secure: false,
-    requireTLS: true,
-    auth: {
-      user: envConfig.office365Email,
-      pass: envConfig.office365AppPassword,
-    },
-  });
-
-  const leadEmail = buildLeadEmail(values);
-  const autoReplyEmail = buildAutoReplyEmail(values);
-
   try {
-    await transporter.sendMail({
-      from: envConfig.office365Email,
+    await sendGraphMail(envConfig.mail, {
       to: envConfig.leadNotificationTo,
       replyTo: values.email,
       subject: `New ${site.name} lead: ${values.projectType}`,
-      text: leadEmail.text,
-      html: leadEmail.html,
+      html: buildLeadEmail(values),
     });
 
-    await transporter.sendMail({
-      from: envConfig.office365Email,
+    await sendGraphMail(envConfig.mail, {
       to: values.email,
       subject: `We got your note (${site.name})`,
-      text: autoReplyEmail.text,
-      html: autoReplyEmail.html,
+      html: buildAutoReplyEmail(values),
     });
   } catch (error) {
     console.error("Consultation email delivery failed", error);

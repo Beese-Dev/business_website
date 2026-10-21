@@ -10,7 +10,7 @@ and web apps for small businesses and entrepreneurs, in Pittsburgh and remote.
 - TypeScript
 - Tailwind CSS 4
 - Local MDX content planned with `next-mdx-remote`
-- Office 365 email flow with `nodemailer`
+- Microsoft 365 email flow through Microsoft Graph (app registration, no SMTP)
 
 ## Local Development
 
