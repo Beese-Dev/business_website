@@ -90,7 +90,7 @@ export const projects: Project[] = [
   {
     slug: "orderly-move",
     name: "Orderly Move",
-    client: "CCB Tech",
+    client: "Orderly Move",
     kind: "Web app",
     audience: "entrepreneurs",
     featured: true,
@@ -98,7 +98,7 @@ export const projects: Project[] = [
     year: "2026",
     result: "A paid moving checklist, built and launched from spec to Stripe checkout.",
     summary:
-      "Orderly Move turns nine answers about a move into a checklist dated back from moving day, week by week. Visitors see the first two weeks free, then pay once for the full PDF in Letter or A4, with optional box labels, a calendar file and weekly email reminders. Our own product, built from a written spec to a live, paid launch in the US, Canada and the UK.",
+      "Orderly Move turns nine answers about a move into a checklist dated back from moving day, week by week. Visitors see the first two weeks free, then pay once for the full PDF in Letter or A4, with optional box labels, a calendar file and weekly email reminders. Built from a written spec to a live, paid launch in the US, Canada and the UK.",
     features: [
       "Every task dated from the moving day",
       "Free two-week preview, then one payment",
@@ -118,11 +118,12 @@ export const projects: Project[] = [
     },
     caseStudy: {
       facts: [
-        { label: "Client", value: "CCB Tech (our own product)" },
+        { label: "Client", value: "Orderly Move" },
         { label: "Type", value: "Paid web tool" },
+        { label: "Scope", value: "Spec to launch" },
         { label: "Markets", value: "US, Canada, UK" },
       ],
-      idea: "Generic moving checklists tell you what to do but not when. The idea was a checklist with real dates: tell it your moving day, where you are going and who is coming, and every task lands on a day, counted back from the move. Small enough to pay for once, like a roll of tape.",
+      idea: "Generic moving checklists tell you what to do but not when. The brief was a checklist with real dates: tell it your moving day, where you are going and who is coming, and every task lands on a day, counted back from the move. Small enough to pay for once, like a roll of tape.",
       challenge:
         "The product has to be useful before anyone pays, without giving the whole thing away. The server only ever sends the first two weeks to the browser; later weeks are counts, not blurred text. Add to that three countries with different notice periods and sales tax, a PDF that prints well in black and white on two paper sizes, and download links that keep working for thirty days without accounts or passwords.",
       built: [
@@ -140,7 +141,7 @@ export const projects: Project[] = [
         "Infrastructure as code in Bicep, CI with unit, API and Playwright end-to-end tests on every pull request.",
       ],
       result:
-        "Orderly Move is live and taking payments in three countries. It went from a written spec to a launched product with tests, infrastructure as code and a deploy pipeline, the same way we would build it for a client.",
+        "Orderly Move is live and taking payments in three countries. It went from a written spec to a launched product with tests, infrastructure as code and a deploy pipeline.",
       quote: null,
     },
   },
