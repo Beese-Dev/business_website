@@ -219,9 +219,10 @@ export default function Home() {
               One developer. Local, reachable, and on the whole project.
             </h2>
             <p className="t-lead mt-4 text-ink-muted">
-              {site.name} is {site.owner.name}, a developer in {site.city}.
-              You talk to the person who designs, builds and hosts your site,
-              and that person answers the phone afterwards.
+              {site.name} is a {site.city} web development business that puts
+              one developer on every project. The person who designs, builds
+              and hosts your site is the same person who answers the phone
+              afterwards.
             </p>
             {site.clientQuote ? (
               <blockquote className="mt-8 border-l-2 border-brand pl-5">
