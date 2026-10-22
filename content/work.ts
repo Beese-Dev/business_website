@@ -42,7 +42,6 @@ export const projects: Project[] = [
     client: "Rixa Aperta",
     kind: "Web app",
     audience: "entrepreneurs",
-    featured: true,
     url: "https://rixaaperta.com",
     year: "2026",
     result: "A live debate platform, from idea to working product.",
@@ -86,6 +85,63 @@ export const projects: Project[] = [
       result:
         "Rixa Aperta went from an idea to a product that people can sign in to and use. The founder has a live platform to put in front of users and a codebase that can grow with it.",
       quote: null, // TODO: add the founder's quote once approved
+    },
+  },
+  {
+    slug: "orderly-move",
+    name: "Orderly Move",
+    client: "CCB Tech",
+    kind: "Web app",
+    audience: "entrepreneurs",
+    featured: true,
+    url: "https://orderlymove.com",
+    year: "2026",
+    result: "A paid moving checklist, built and launched from spec to Stripe checkout.",
+    summary:
+      "Orderly Move turns nine answers about a move into a checklist dated back from moving day, week by week. Visitors see the first two weeks free, then pay once for the full PDF in Letter or A4, with optional box labels, a calendar file and weekly email reminders. Our own product, built from a written spec to a live, paid launch in the US, Canada and the UK.",
+    features: [
+      "Every task dated from the moving day",
+      "Free two-week preview, then one payment",
+      "PDF in Letter or A4, plus three add-ons",
+      "US, Canada and UK versions with tax at checkout",
+    ],
+    stack: ["React", "Azure Functions", "PostgreSQL", "Stripe"],
+    images: {
+      desktop: {
+        src: "/work/orderly-move/desktop.png",
+        alt: "The Orderly Move home page on desktop: a live sample week that re-dates as you change the moving day",
+      },
+      phone: {
+        src: "/work/orderly-move/phone.png",
+        alt: "The Orderly Move home page on a phone",
+      },
+    },
+    caseStudy: {
+      facts: [
+        { label: "Client", value: "CCB Tech (our own product)" },
+        { label: "Type", value: "Paid web tool" },
+        { label: "Markets", value: "US, Canada, UK" },
+      ],
+      idea: "Generic moving checklists tell you what to do but not when. The idea was a checklist with real dates: tell it your moving day, where you are going and who is coming, and every task lands on a day, counted back from the move. Small enough to pay for once, like a roll of tape.",
+      challenge:
+        "The product has to be useful before anyone pays, without giving the whole thing away. The server only ever sends the first two weeks to the browser; later weeks are counts, not blurred text. Add to that three countries with different notice periods and sales tax, a PDF that prints well in black and white on two paper sizes, and download links that keep working for thirty days without accounts or passwords.",
+      built: [
+        "A nine-question form and a preview that shows the first two weeks fully dated, with totals for the rest.",
+        "A rules engine that builds the timeline from the answers: renter or owner, kids and pets, country, and how far away the move is, down to a move that is today.",
+        "Stripe Checkout with Stripe Tax for US sales tax, Canadian GST/HST/PST and UK VAT, in each country's currency.",
+        "The full checklist as a PDF in Letter or A4, with room-by-room packing pages, and three add-ons: box labels and an inventory sheet, a calendar file, and weekly reminder emails.",
+        "Fast, crawlable landing pages for each kind of move, since the traffic comes from search.",
+      ],
+      underTheHood: [
+        "TypeScript monorepo: a pure rules engine and task library shared by the API, the PDF and the tests.",
+        "React Router front end, prerendered and served from Azure Static Web Apps with a strict content security policy.",
+        "Azure Functions API on Node 24 with PostgreSQL, Stripe webhooks for fulfilment, and a daily timer for reminder emails.",
+        "PDFs rendered server-side with react-pdf; download tokens stored hashed, two per order.",
+        "Infrastructure as code in Bicep, CI with unit, API and Playwright end-to-end tests on every pull request.",
+      ],
+      result:
+        "Orderly Move is live and taking payments in three countries. It went from a written spec to a launched product with tests, infrastructure as code and a deploy pipeline, the same way we would build it for a client.",
+      quote: null,
     },
   },
   {
