@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { FeaturedProject, ProjectCard } from "@/components/ProjectCard";
+import { ProjectShowcase } from "@/components/ProjectShowcase";
 import { ButtonLink, Container, Eyebrow, Section } from "@/components/ui";
-import { getFeaturedProject, projects } from "@/content/work";
+import { getShowcaseProjects } from "@/content/work";
 
 export const metadata: Metadata = {
   title: "Work: websites and web apps we have built",
@@ -11,9 +11,6 @@ export const metadata: Metadata = {
 };
 
 export default function WorkPage() {
-  const featured = getFeaturedProject();
-  const rest = projects.filter((project) => project.slug !== featured.slug);
-
   return (
     <div>
       <Section className="border-b border-line">
@@ -31,14 +28,7 @@ export default function WorkPage() {
 
       <Section>
         <Container>
-          <FeaturedProject project={featured} />
-          {rest.length > 0 ? (
-            <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {rest.map((project) => (
-                <ProjectCard key={project.slug} project={project} />
-              ))}
-            </div>
-          ) : null}
+          <ProjectShowcase projects={getShowcaseProjects()} preload />
         </Container>
       </Section>
 

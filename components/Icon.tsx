@@ -78,6 +78,14 @@ const paths = {
       <path d="M12 6v6l4 2" />
     </>
   ),
+  x: (
+    <>
+      <path d="M18 6 6 18" />
+      <path d="m6 6 12 12" />
+    </>
+  ),
+  "chevron-left": <path d="m15 18-6-6 6-6" />,
+  "chevron-right": <path d="m9 18 6-6-6-6" />,
   globe: (
     <>
       <circle cx="12" cy="12" r="10" />

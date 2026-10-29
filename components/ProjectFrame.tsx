@@ -34,12 +34,12 @@ function Placeholder({
 export function DesktopFrame({
   project,
   image = project.images.desktop,
-  priority = false,
+  preload = false,
   className = "",
 }: {
   project: Project;
   image?: Screenshot | null;
-  priority?: boolean;
+  preload?: boolean;
   className?: string;
 }) {
   const address = project.url
@@ -66,7 +66,7 @@ export function DesktopFrame({
             src={image.src}
             alt={image.alt}
             fill
-            priority={priority}
+            preload={preload}
             sizes="(min-width: 1024px) 560px, 100vw"
             className="object-cover object-top"
           />
@@ -115,14 +115,14 @@ export function PhoneFrame({
 /* Desktop and phone side by side, phone overlapping the lower right. */
 export function ScreenshotPair({
   project,
-  priority = false,
+  preload = false,
 }: {
   project: Project;
-  priority?: boolean;
+  preload?: boolean;
 }) {
   return (
     <div className="relative">
-      <DesktopFrame project={project} priority={priority} className="mr-10 sm:mr-16" />
+      <DesktopFrame project={project} preload={preload} className="mr-10 sm:mr-16" />
       <PhoneFrame
         project={project}
         className="absolute -bottom-4 right-0 w-24 shadow-card sm:w-32"

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ConsultationForm } from "@/components/ConsultationForm";
 import { ContactDetails } from "@/components/ContactDetails";
 import { Icon } from "@/components/Icon";
-import { FeaturedProject, ProjectCard } from "@/components/ProjectCard";
+import { ProjectShowcase } from "@/components/ProjectShowcase";
 import { ScreenshotPair } from "@/components/ProjectFrame";
 import {
   ButtonLink,
@@ -22,11 +22,11 @@ import {
   services,
   site,
 } from "@/content/site";
-import { getFeaturedProject, projects } from "@/content/work";
+import { getFeaturedProject, getShowcaseProjects } from "@/content/work";
 
 export default function Home() {
   const featured = getFeaturedProject();
-  const otherProjects = projects.filter((p) => p.slug !== featured.slug);
+  const showcase = getShowcaseProjects();
 
   return (
     <div>
@@ -59,7 +59,7 @@ export default function Home() {
             </p>
           </div>
           <div className="md:pl-4">
-            <ScreenshotPair project={featured} priority />
+            <ScreenshotPair project={featured} preload />
           </div>
         </Container>
       </section>
@@ -107,14 +107,7 @@ export default function Home() {
           />
         </Container>
         <Container>
-          <FeaturedProject project={featured} />
-          {otherProjects.length > 0 ? (
-            <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {otherProjects.map((project) => (
-                <ProjectCard key={project.slug} project={project} />
-              ))}
-            </div>
-          ) : null}
+          <ProjectShowcase projects={showcase} />
           <div className="mt-10">
             <ButtonLink href="/work" variant="secondary" icon="arrow-right">
               See all work
@@ -144,16 +137,7 @@ export default function Home() {
                   {pkg.popular ? <Pill>Most popular</Pill> : null}
                 </div>
                 <p className="mt-3 font-display text-2xl font-bold text-ink">
-                  {pkg.priceFrom ? (
-                    <>
-                      <span className="t-small font-sans font-normal text-ink-muted">
-                        from{" "}
-                      </span>
-                      {pkg.priceFrom}
-                    </>
-                  ) : (
-                    "Quoted"
-                  )}
+                  {pkg.priceFrom ? `${pkg.priceFrom}+` : "Quoted"}
                 </p>
                 <p className="t-body mt-3 text-ink-muted">{pkg.summary}</p>
                 <CheckList items={pkg.includes} className="mt-5" />

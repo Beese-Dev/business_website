@@ -193,6 +193,64 @@ export const projects: Project[] = [
       quote: null,
     },
   },
+  {
+    slug: "starcradle",
+    name: "Starcradle",
+    client: "Starcradle",
+    kind: "Web app",
+    audience: "entrepreneurs",
+    url: "https://starcradle.space",
+    year: "2026",
+    result: "A small universe that runs in the browser, from stars to black holes.",
+    summary:
+      "Starcradle is a small universe that runs in a browser tab. Plant stars, grow planets out of their discs, name worlds and moons, launch probes, and watch stars live, die and feed black holes on a real clock, from a day per second up to a million years per second. A daily challenge gives everyone the same seeded universe and a shared leaderboard.",
+    features: [
+      "Stars of every class that age, die and leave remnants",
+      "Procedural planets, moons, rings and habitable zones",
+      "Probes on gravity-bent trajectories",
+      "A daily seeded challenge with a shared leaderboard",
+    ],
+    stack: ["three.js", "WebGL", "esbuild", "Cloudflare Workers", "GitHub Pages"],
+    images: {
+      desktop: {
+        src: "/work/starcradle/desktop.png",
+        alt: "Starcradle on desktop: a G-type star with planets in orbit, the time and plant controls, and the first welcome lesson",
+      },
+      phone: {
+        src: "/work/starcradle/phone.png",
+        alt: "Starcradle on a phone",
+      },
+    },
+    caseStudy: {
+      facts: [
+        { label: "Client", value: "Starcradle" },
+        { label: "Type", value: "Browser game" },
+        { label: "Scope", value: "Idea to launch" },
+        { label: "Runs on", value: "Any modern browser, nothing to install" },
+      ],
+      idea: "Most space games are about ships. Starcradle is the opposite: a quiet universe you tend. Plant a star, watch its disc settle into planets, name the worlds, and come back to find that time has moved on. It had to run in a browser tab with nothing to install, save itself, and still feel like a real place with real physics behind it.",
+      challenge:
+        "Time is the hard part. The clock runs from a day per second up to a million years per second, and everything has to stay consistent at every speed: orbits, stellar lifetimes, comets, impacts and the deaths of stars. It all has to render smoothly on an ordinary laptop or phone, and the daily challenge has to hand every player the same universe from one seed so that scores mean something.",
+      built: [
+        "Stars of every class with lifetimes set by their mass: red giants, planetary nebulae, white dwarfs, supernovas, pulsars and stellar black holes.",
+        "Procedurally generated planets (rocky, ocean, gas giant, lava, ice) with moons, rings, tidal locking and habitable zones.",
+        "Comets, impacts and impact winters, and black holes that bend orbits, capture stars and feed on close companions.",
+        "Probes on real gravity-bent trajectories, with a report when they arrive.",
+        "Field notes, postcards, discoveries, share codes and an ambient generative soundtrack.",
+        "A daily challenge: the same seeded universe for everyone each UTC day, one billion years to play, and a shared Legacy leaderboard.",
+      ],
+      underTheHood: [
+        "Rendered with three.js on WebGL, with custom shaders and bloom post-processing.",
+        "Pure, unit-tested modules for the physics formulas, the seeded random numbers, formatting and scoring.",
+        "Built with esbuild into a static site. Everything is saved in the browser, and share codes carry a universe to a friend's copy of the page.",
+        "The daily leaderboard runs on a small Cloudflare Worker.",
+        "Tests, build and deploy to GitHub Pages run on every push. No servers to look after.",
+      ],
+      result:
+        "Starcradle is live at starcradle.space and plays in any modern browser, with a daily challenge that gives people a reason to come back.",
+      quote: null,
+    },
+  },
 ];
 
 export function getProject(slug: string) {
@@ -201,4 +259,10 @@ export function getProject(slug: string) {
 
 export function getFeaturedProject() {
   return projects.find((project) => project.featured) ?? projects[0];
+}
+
+/* Featured project first, then the rest in their listed order. */
+export function getShowcaseProjects() {
+  const featured = getFeaturedProject();
+  return [featured, ...projects.filter((p) => p.slug !== featured.slug)];
 }

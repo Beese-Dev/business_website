@@ -90,7 +90,7 @@ export default async function CaseStudyPage({ params }: Props) {
       {/* Hero screenshot */}
       <Section className="pb-0 md:pb-0">
         <Container className="grid gap-6 md:grid-cols-[1fr_200px] md:items-end">
-          <DesktopFrame project={project} priority />
+          <DesktopFrame project={project} preload />
           <PhoneFrame project={project} className="w-40 md:w-full" />
         </Container>
       </Section>
