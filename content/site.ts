@@ -95,7 +95,7 @@ export const services: Service[] = [
 
 export type Package = {
   name: string;
-  priceFrom: string | null; // e.g. "$1,800"; null shows "Quoted"
+  priceFrom: string | null; // e.g. "$200", shown as "$200+"; null shows "Quoted"
   popular?: boolean;
   summary: string;
   includes: string[];
@@ -128,7 +128,7 @@ export type ProjectType = (typeof projectTypes)[number]["value"];
 export const packages: Package[] = [
   {
     name: "Starter",
-    priceFrom: null, // TODO: publish the starting price, e.g. "$1,500"
+    priceFrom: "$200",
     summary:
       "A one-page site that says what you do, where you are and how to reach you.",
     includes: [
@@ -142,7 +142,7 @@ export const packages: Package[] = [
   },
   {
     name: "Business",
-    priceFrom: null, // TODO: publish the starting price
+    priceFrom: "$500",
     popular: true,
     summary:
       "A multi-page site for a business that needs to show its work and win customers.",
