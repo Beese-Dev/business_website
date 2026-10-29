@@ -176,4 +176,24 @@ a {
     transform: translateY(-2px);
     box-shadow: var(--shadow-card);
   }
+
+  /* The project window's content fades in when a different project is shown. */
+  .showcase-enter {
+    animation: showcase-enter 220ms ease both;
+  }
+  @keyframes showcase-enter {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .showcase-enter {
+      animation: none;
+    }
+  }
 }
